@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+
+  web:
+    build: .
+    container_name: flask_app
+    ports:
+      - "8000:5000"
+    environment:
+      - FLASK_APP=superset.src.main
+      - FLASK_ENV=development
+      - SQLALCHEMY_DATABASE_URI=postgresql://postgres:postgres@db:5432/flask_superset
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+    volumes:
+      - .:/app
+    networks:
+      - app_network
+
+  db:
+    image: postgres:13
+    container_name: postgres_db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=flask_superset
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - app_network
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    tmpfs:
+      - /data
+    networks:
+      - app_network
+    restart: always
+
+volumes:
+  pgdata:
+
+networks:
+  app_network:
+    driver: bridge

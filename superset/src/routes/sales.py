@@ -8,7 +8,7 @@ bp = Blueprint('sales', __name__, url_prefix='/api/sales')
 
 
 @bp.route('/total', methods=['GET'])
-@cache.cached(timeout=300, key_prefix=lambda: SalesService.generate_cache_key(**request.args))
+@cache.cached(timeout=300, key_prefix=lambda: SalesService.generate_cache_key(request.path, **request.args))
 def total_sales():
     schema = SalesAnalyticsSchema()
     errors = schema.validate(request.args)
@@ -28,7 +28,7 @@ def total_sales():
 
 
 @bp.route('/top-products', methods=['GET'])
-@cache.cached(timeout=300, key_prefix=lambda: SalesService.generate_cache_key(**request.args))
+@cache.cached(timeout=300, key_prefix=lambda: SalesService.generate_cache_key(request.path, **request.args))
 def top_products():
     schema = SalesAnalyticsSchema()
     errors = schema.validate(request.args)

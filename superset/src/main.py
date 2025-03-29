@@ -1,10 +1,12 @@
 from flask import Flask, jsonify
+from flask_cors import CORS
 from superset.src.extensions import cache
 from superset.src.routes import products, categories, sales
 
 
 def build_app():
     app = Flask(__name__)
+    CORS(app, resources={r"/api/*": {"origins": "*"}})
     app.config.from_object('superset.src.config')
     cache.init_app(app)
 
@@ -30,4 +32,4 @@ def build_app():
 flask_app = build_app()
 
 if __name__ == '__main__':
-    flask_app.run()
+    flask_app.run("0.0.0.0", port=5000, debug=True)

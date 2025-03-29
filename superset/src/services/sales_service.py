@@ -54,7 +54,7 @@ class SalesService:
             raise RuntimeError(f"Database error: {str(e)}")
 
     @staticmethod
-    def generate_cache_key(**kwargs) -> str:
-        key_data = "_".join(f"{k}={v}" for k, v in sorted(kwargs.items()))
+    def generate_cache_key(request_path: str, **kwargs) -> str:
+        key_data = f"{request_path}_" + "_".join(f"{k}={v}" for k, v in sorted(kwargs.items()))
         return hashlib.md5(key_data.encode()).hexdigest()
 
