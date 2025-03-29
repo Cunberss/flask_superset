@@ -2,11 +2,13 @@ from flask import Blueprint, request, jsonify
 from superset.src.services import SalesService
 from superset.src.db.base import get_session
 from superset.src.schemas.sales import SalesAnalyticsSchema
+from superset.src.extensions import cache
 
 bp = Blueprint('sales', __name__, url_prefix='/api/sales')
 
 
 @bp.route('/total', methods=['GET'])
+@cache.cached(timeout=300, key_prefix=lambda: SalesService.generate_cache_key(**request.args))
 def total_sales():
     schema = SalesAnalyticsSchema()
     errors = schema.validate(request.args)
@@ -26,6 +28,7 @@ def total_sales():
 
 
 @bp.route('/top-products', methods=['GET'])
+@cache.cached(timeout=300, key_prefix=lambda: SalesService.generate_cache_key(**request.args))
 def top_products():
     schema = SalesAnalyticsSchema()
     errors = schema.validate(request.args)

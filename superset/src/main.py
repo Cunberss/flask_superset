@@ -1,15 +1,17 @@
 from flask import Flask, jsonify
-
+from superset.src.extensions import cache
 from superset.src.routes import products, categories, sales
 
 
 def build_app():
     app = Flask(__name__)
+    app.config.from_object('superset.src.config')
+    cache.init_app(app)
+
     app.register_blueprint(products.bp)
     app.register_blueprint(categories.bp)
     app.register_blueprint(sales.bp)
 
-    # Обработчики ошибок
     @app.errorhandler(400)
     def bad_request(e):
         return jsonify({"error": "Bad request"}), 400
@@ -26,7 +28,6 @@ def build_app():
 
 
 flask_app = build_app()
-
 
 if __name__ == '__main__':
     flask_app.run()

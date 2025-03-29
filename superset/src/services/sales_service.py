@@ -1,3 +1,4 @@
+import hashlib
 from typing import List, Dict
 from datetime import date
 from sqlalchemy import func, desc
@@ -46,9 +47,14 @@ class SalesService:
             return [{
                 "product_id": p[0],
                 "product_name": p[1],
-                "total_sold": p[2],
-                "total_revenue": round(p[3], 2)  # округляем до 2 знаков после запятой
+                "total_quantity": p[2],
+                "total_amount": round(p[3], 2)
             } for p in top_products]
         except SQLAlchemyError as e:
             raise RuntimeError(f"Database error: {str(e)}")
+
+    @staticmethod
+    def generate_cache_key(**kwargs) -> str:
+        key_data = "_".join(f"{k}={v}" for k, v in sorted(kwargs.items()))
+        return hashlib.md5(key_data.encode()).hexdigest()
 
