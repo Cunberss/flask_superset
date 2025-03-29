@@ -10,5 +10,5 @@ ENV PYTHONPATH="$PYTHONPATH:/project/superset"
 
 EXPOSE 5000
 
-CMD python3 superset/src/db/seed.py && python3 superset/src/main.py
+CMD alembic upgrade head && python3 superset/src/db/seed.py && python3 superset/src/main.py
 
