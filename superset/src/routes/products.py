@@ -7,6 +7,7 @@ bp = Blueprint('products', __name__, url_prefix='/api/products')
 
 @bp.route('/', methods=['GET'])
 def get_all():
+    """Возвращает все продукты"""
     try:
         with get_session() as session:
             service = ProductService(session)
@@ -18,6 +19,7 @@ def get_all():
 
 @bp.route('/', methods=['POST'])
 def create():
+    """Создает продукт"""
     data = request.get_json()
     try:
         with get_session() as session:
@@ -32,6 +34,7 @@ def create():
 
 @bp.route('/<int:product_id>', methods=['PUT'])
 def update(product_id):
+    """Обновляет продукт"""
     data = request.get_json()
     try:
         with get_session() as session:
@@ -48,6 +51,7 @@ def update(product_id):
 
 @bp.route('/<int:product_id>', methods=['DELETE'])
 def delete(product_id):
+    """Удаляет продукт"""
     try:
         with get_session() as session:
             service = ProductService(session)
