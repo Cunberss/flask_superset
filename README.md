@@ -21,10 +21,13 @@
 2. `POST /api/products`: Создать новый продукт.
 3. `PUT /api/products/<id>`: Обновить продукт по ID.
 4. `DELETE /api/products/<id>`: Удалить продукт по ID.
-
 5. `GET /api/sales/total`: Возвращает общую сумму продаж за указанный период (параметры: start_date, end_date).
+Пример запроса: `/api/sales/total?start_date=2025-02-03&end_date=2025-03-12`
 6. `GET /api/sales/top-products`: Возвращает топ-N самых продаваемых товаров за указанный период (параметры: start_date, end_date, limit).
+Пример запроса: `/api/sales/top-products?start_date=2025-02-03&end_date=2025-03-12&limit=10`
 7. `GET /api/categories`: Возвращает список всех категорий.
 8. `POST /api/categories`: Создать новую категорию.
 9. `DELETE /api/categories/<id>`: Удалить категорию по ID.
+
+
 
