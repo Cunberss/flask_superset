@@ -8,8 +8,9 @@
 1. Создать виртуальное окружение
 2. Установить зависимости: `pip install -r requirements.txt`
 3. Создать файл .env с переменными окружения
-4. Загрузить тестовые данные в базу данных из директории  `src/db`:  `python3 seed.py`
-5. Запустить приложение из директории `src`: `python3 main.py`
+4. Выполнить миграции: `alembic upgrade head`
+5. Загрузить тестовые данные в базу данных из директории  `src/db`:  `python3 seed.py`
+6. Запустить приложение из директории `src`: `python3 main.py`
 
 ### Запуск через Docker
 1. Запустить команду `docker-compose up --build` из проекта
@@ -21,6 +22,9 @@
 3. `PUT /api/products/<id>`: Обновить продукт по ID.
 4. `DELETE /api/products/<id>`: Удалить продукт по ID.
 
-5. `/api/sales/total`: Возвращает общую сумму продаж за указанный период (параметры: start_date, end_date).
-6. `/api/sales/top-products`: Возвращает топ-N самых продаваемых товаров за указанный период (параметры: start_date, end_date, limit).
+5. `GET /api/sales/total`: Возвращает общую сумму продаж за указанный период (параметры: start_date, end_date).
+6. `GET /api/sales/top-products`: Возвращает топ-N самых продаваемых товаров за указанный период (параметры: start_date, end_date, limit).
+7. `GET /api/categories`: Возвращает список всех категорий.
+8. `POST /api/categories`: Создать новую категорию.
+9. `DELETE /api/categories/<id>`: Удалить категорию по ID.
 
